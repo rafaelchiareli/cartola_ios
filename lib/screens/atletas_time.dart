@@ -66,7 +66,7 @@ class ListaAtletas extends StatelessWidget {
                             ],
                           )),
                           onTap: () => _showMaterialModalBottomSheet(
-                              context),
+                              context, atleta.scout),
                         ),
                       );
                     },
@@ -81,7 +81,7 @@ class ListaAtletas extends StatelessWidget {
             }));
   }
 
-  void _showMaterialModalBottomSheet(BuildContext context, Scout scout) {
+  void _showMaterialModalBottomSheet(BuildContext context, Scout? scout) {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -93,8 +93,8 @@ class ListaAtletas extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const Text(scout.cA.toString()),
-                const Text('Modal BottomSheet'),
+                 Text(scout.toString()),
+                 Text('Modal BottomSheet'),
                 ElevatedButton(
                   child: const Text('Close BottomSheet'),
                   onPressed: () => Navigator.pop(context),
