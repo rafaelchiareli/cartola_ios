@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-class Atleta{
+import 'scout.dart';
 
+class Atleta{
+  final Scout? scout;
   final int atletaId;
   final int rodadaId;
   final int clubeId;
@@ -23,7 +25,7 @@ class Atleta{
   final Icon icone;
 
   Atleta(
-
+      this.scout,
       this.atletaId,
       this.rodadaId,
       this.clubeId,

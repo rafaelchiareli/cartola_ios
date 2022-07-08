@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cartola_ios/models/atleta.dart';
+import 'package:cartola_ios/models/scout.dart';
 import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
@@ -55,6 +56,7 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
   final List<Atleta> listaAtletas = [];
 
   for (Map<String, dynamic> data in decodedJson["atletas"]) {
+    print(data['scout']['CA']);
     Icon icone = Icon(Icons.add);
 
     switch (data['status_id']){
@@ -81,7 +83,33 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
             color: Colors.green);
         break;
     }
+    final Scout scout = Scout(
+        data['scout']['CA'],
+        data['scout']['DS'],
+        data['scout']['FC'],
+        data['scout']['FF'],
+        data['scout']['FS'],
+        data['scout']['PI'],
+        data['scout']['SG'],
+
+      data['scout']['A'],
+      data['scout']['FD'],
+      data['scout']['FT'],
+      data['scout']['G'],
+      data['scout']['I'],
+      data['scout']['PS'],
+
+      data['scout']['DE'],
+      data['scout']['GS'],
+      data['scout']['PC'],
+      data['scout']['VC'],
+      data['scout']['GC'],
+      data['scout']['PP'],
+      data['scout']['DP'],
+
+    );
     final Atleta atleta = Atleta(
+      scout,
       data['atleta_id'],
       data['rodada_id'],
       data['clube_id'],
