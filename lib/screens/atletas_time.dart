@@ -14,7 +14,47 @@ class ListaAtletas extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [],
+          title: Text("Atletas"),
+
+          actions: [
+
+            PopupMenuButton(
+            padding:  EdgeInsets.fromLTRB(1.0, 2.0, 10.0, 4.0),
+             child:  Icon(Icons.filter_list_sharp ,
+            ),
+              // add icon, by default "3 dot" icon
+              // icon: Icon(Icons.book)
+                itemBuilder: (context){
+                  return [
+                    const PopupMenuItem<int>(
+                      value: 0,
+                      child: Text("Dúvida"),
+                    ),
+
+                    const PopupMenuItem<int>(
+                      value: 1,
+                      child: Text("Settings"),
+                    ),
+
+                    const PopupMenuItem<int>(
+                      value: 2,
+                      child: Text("Logout"),
+                    ),
+                  ];
+                },
+                onSelected:(value){
+                  if(value == 0){
+                    print("My account menu is selected.");
+                  }else if(value == 1){
+                    print("Settings menu is selected.");
+                  }else if(value == 2){
+                    print("Logout menu is selected.");
+                  }
+                }
+            ),
+           Padding(padding: EdgeInsets.only(right: 15.0))
+
+          ],
         ),
         body: FutureBuilder<List<Atleta>>(
             future: listarAtletas(clube_id),
@@ -87,7 +127,7 @@ class ListaAtletas extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           height: 300,
-          color: Colors.amber,
+          color: Colors.lightBlue,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

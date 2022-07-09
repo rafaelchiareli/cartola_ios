@@ -20,6 +20,11 @@ class Scout {
   int? pP;
   int? dP;
 
+  @override
+  String toString() {
+    return 'Scout{cA: $cA, dS: $dS, fC: $fC, fF: $fF, fS: $fS, pI: $pI, sG: $sG, a: $a, fD: $fD, fT: $fT, g: $g, i: $i, pS: $pS, dE: $dE, gS: $gS, pC: $pC, cV: $cV, gC: $gC, pP: $pP, dP: $dP}';
+  }
+
   Scout(
       this.cA,
       this.dS,
@@ -40,5 +45,6 @@ class Scout {
       this.cV,
       this.gC,
       this.pP,
-      this.dP);
+      this.dP);  
+
 }

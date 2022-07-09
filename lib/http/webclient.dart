@@ -59,46 +59,39 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
     print(data['scout']['CA']);
     Icon icone = Icon(Icons.add);
 
-    switch (data['status_id']){
+    switch (data['status_id']) {
       case 2:
-        icone =  Icon(Icons.question_mark,
-            color: Colors.yellow);
+        icone = Icon(Icons.question_mark, color: Colors.yellow);
 
         break;
       case 3:
-        icone = Icon(Icons.cancel,
-            color: Colors.red);
+        icone = Icon(Icons.cancel, color: Colors.red);
         break;
       case 5:
-        icone = Icon(Icons.local_hospital,
-            color: Colors.red);
+        icone = Icon(Icons.local_hospital, color: Colors.red);
 
         break;
       case 6:
-        icone= Icon(Icons.notifications_none,
-            color: Colors.black);
+        icone = Icon(Icons.notifications_none, color: Colors.black);
         break;
       case 7:
-        icone = Icon(Icons.check,
-            color: Colors.green);
+        icone = Icon(Icons.check, color: Colors.green);
         break;
     }
     final Scout scout = Scout(
-        data['scout']['CA'],
-        data['scout']['DS'],
-        data['scout']['FC'],
-        data['scout']['FF'],
-        data['scout']['FS'],
-        data['scout']['PI'],
-        data['scout']['SG'],
-
-      data['scout']['A'],
+      data['scout']['CA'],
+      data['scout']['DS'],
+      data['scout']['FC'],
+      data['scout']['FF'],
+      data['scout']['FS'],
+      data['scout']['PI'],
+      data['scout']['SG'],
+      data['scout']['A'] ,
       data['scout']['FD'],
       data['scout']['FT'],
-      data['scout']['G'],
-      data['scout']['I'],
+      data['scout']['G'] ,
+      data['scout']['I'] ,
       data['scout']['PS'],
-
       data['scout']['DE'],
       data['scout']['GS'],
       data['scout']['PC'],
@@ -106,30 +99,26 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
       data['scout']['GC'],
       data['scout']['PP'],
       data['scout']['DP'],
-
     );
     final Atleta atleta = Atleta(
-      scout,
-      data['atleta_id'],
-      data['rodada_id'],
-      data['clube_id'],
-      data['posicao_id'],
-      data['status_id'],
-      double.parse(data['pontos_num'].toString()),
-      double.parse(data['preco_num'].toString()),
-      double.parse(data['variacao_num'].toString()),
-      double.parse(data['media_num'].toString()),
-
-      data['jogos_num'],
-      double.parse(data['minimo_para_valorizar'].toString()),
-
-      data['slug'],
-      data['apelido'],
-      data['apelido_abreviado'],
-      data['nome'],
-      data['foto'] == null ? "" :  data['foto'] ,
-      icone
-    );
+        scout,
+        data['atleta_id'],
+        data['rodada_id'],
+        data['clube_id'],
+        data['posicao_id'],
+        data['status_id'],
+        double.parse(data['pontos_num'].toString()),
+        double.parse(data['preco_num'].toString()),
+        double.parse(data['variacao_num'].toString()),
+        double.parse(data['media_num'].toString()),
+        data['jogos_num'],
+        double.parse(data['minimo_para_valorizar'].toString()),
+        data['slug'],
+        data['apelido'],
+        data['apelido_abreviado'],
+        data['nome'],
+        data['foto'] == null ? "" : data['foto'],
+        icone);
     listaAtletas.add(atleta);
   }
 
