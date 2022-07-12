@@ -1,6 +1,7 @@
 import 'package:cartola_ios/http/webclient.dart';
 import 'package:cartola_ios/models/clube.dart';
 import 'package:cartola_ios/screens/atletas_time.dart';
+import 'package:cartola_ios/widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/progress.dart';
@@ -9,6 +10,7 @@ class Times extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavigationDrawerWidget(),
       appBar: AppBar(
         title: Text('Times'),
       ),

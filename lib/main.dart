@@ -1,4 +1,5 @@
 import 'package:cartola_ios/screens/times.dart';
+import 'package:cartola_ios/widgets/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
@@ -17,50 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: Text('TEste')),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children:  <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Times'),
-              onTap: ( ) {
-                _showTimes(context);
-                Navigator.pop(context);
+      appBar: AppBar(title: Text('Teste')),
+      drawer: NavigationDrawerWidget(),
+    ));
+  }
 
-              }
-      ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ],
-        ),
-      ),
-    ));
-  }
-  void _showTimes(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Times(),
-    ));
-  }
 }
 // class MyStatefulWidget extends StatefulWidget {
 //   const MyStatefulWidget({Key? key}) : super(key: key);
