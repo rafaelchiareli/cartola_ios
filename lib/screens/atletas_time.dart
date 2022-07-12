@@ -105,8 +105,8 @@ class ListaAtletas extends StatelessWidget {
                               atleta.icone,
                             ],
                           )),
-                          onTap: () => _showMaterialModalBottomSheet(
-                              context, atleta.scout),
+                          // onTap: () => _showMaterialModalBottomSheet(
+                          //     context, atleta.scout),
                         ),
                       );
                     },
