@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
 import '../models/clube.dart';
+import '../models/partida.dart';
 
 class LoggingInterceptor implements InterceptorContract {
   @override
@@ -25,6 +26,38 @@ class LoggingInterceptor implements InterceptorContract {
     // print('body: ${data.body}');
     return data;
   }
+}
+
+Future<List<Partida>> listarPartidas() async {
+  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+  final Response response =
+      await client.get(Uri.parse('https://api.cartola.globo.com/partidas'));
+  //print(response.body);
+  final Map<String, dynamic> decodedJson = json.decode(response.body);
+  final List<Partida> listaPartidas = [];
+  final List<Clube> listaClube = await listarClubes();
+  for (Map<String, dynamic> data in decodedJson["partidas"]) {
+    Clube mandante;
+    final Partida partida = Partida(
+      data['partida_id'],
+      data['clube_casa_id'],
+      data['clube_casa_posicao'],
+      data['clube_visitante_id'],
+     data['aproveitamento_mandante'].cast<String>(),
+      data['aproveitamento_mandante'].cast<String>(),
+     // data[' data['aproveitamento_mandante'] as List<String>,'][''],
+      data['clube_visitante_posicao'],
+      data['partida_data'],
+      data['timestamp'],
+      data['local'],
+      data['valida'],
+      listaClube.firstWhere((clube) => clube.id == data['clube_casa_id']),
+      listaClube.firstWhere((clube2) => clube2.id == data['clube_visitante_id']),
+    );
+    listaPartidas.add(partida);
+  }
+
+  return listaPartidas;
 }
 
 Future<List<Clube>> listarClubes() async {
@@ -86,11 +119,11 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
       data['scout']['FS'],
       data['scout']['PI'],
       data['scout']['SG'],
-      data['scout']['A'] ,
+      data['scout']['A'],
       data['scout']['FD'],
       data['scout']['FT'],
-      data['scout']['G'] ,
-      data['scout']['I'] ,
+      data['scout']['G'],
+      data['scout']['I'],
       data['scout']['PS'],
       data['scout']['DE'],
       data['scout']['GS'],

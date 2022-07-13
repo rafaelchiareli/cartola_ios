@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'http/webclient.dart';
 import 'models/clube.dart';
+import 'screens/home.dart';
 import 'widgets/progress.dart';
 
 void main() {
   runApp(MyApp());
-  listarAtletas(262).then((listaAtletas) => print('Clubes ${listaAtletas}'));
+  //listarAtletas(262).then((listaAtletas) => print('Clubes ${listaAtletas}'));
+  listarPartidas().then((listPartidas) => print('Partidas : ${listPartidas}'));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,8 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: Text('Teste')),
-      drawer: NavigationDrawerWidget(),
+
+
+          body: Home(),
     ));
   }
 

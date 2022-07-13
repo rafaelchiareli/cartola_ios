@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/home.dart';
 import '../screens/times.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
@@ -43,7 +44,12 @@ class NavigationDrawerWidget extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
+              title: Text('Paginal Inicial'),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Home(),
+                ));
+              }
             ),
             ListTile(
               leading: Icon(Icons.close),
