@@ -37,7 +37,7 @@ Future<List<Partida>> listarPartidas() async {
   final List<Partida> listaPartidas = [];
   final List<Clube> listaClube = await listarClubes();
   for (Map<String, dynamic> data in decodedJson["partidas"]) {
-    Clube mandante;
+
     final Partida partida = Partida(
       data['partida_id'],
       data['clube_casa_id'],
