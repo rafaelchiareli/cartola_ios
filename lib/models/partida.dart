@@ -5,8 +5,8 @@ class Partida {
   final int? clubeCasaId;
   final int? clubeCasaPosicao;
   final int? clubeVisitanteId;
-  final List<String>? aproveitamentoMandante;
-  final List<String>? aproveitamentoVisitante;
+  final List<String> aproveitamentoMandante;
+  final List<String> aproveitamentoVisitante;
   final int? clubeVisitantePosicao;
   final String? partidaData;
   final int? timestamp;
