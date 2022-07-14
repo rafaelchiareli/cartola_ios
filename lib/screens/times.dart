@@ -12,6 +12,7 @@ class Times extends StatelessWidget {
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Times'),
       ),
       body: FutureBuilder<List<Clube>>(

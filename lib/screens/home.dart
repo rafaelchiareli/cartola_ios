@@ -21,15 +21,16 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Partidas da Rodada'),
+        centerTitle: true,
         actions: [
         DropdownButton<int>(
         value: 1,
         icon: const Icon(Icons.arrow_downward),
         elevation: 16,
-        style: const TextStyle(color: Colors.deepPurple),
+        //style: const TextStyle(color: Colors.deepPurple),
         underline: Container(
           height: 2,
-          color: Colors.deepPurpleAccent,
+         // color: Colors.deepPurpleAccent,
         ),
         onChanged: (int? newValue) {
           setState(() {

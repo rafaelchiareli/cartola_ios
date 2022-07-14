@@ -8,6 +8,8 @@ import 'models/clube.dart';
 import 'screens/home.dart';
 import 'widgets/progress.dart';
 
+import 'theme/color_scheme.dart';
+
 void main() {
   runApp(MyApp());
   //listarAtletas(262).then((listaAtletas) => print('Clubes ${listaAtletas}'));
@@ -19,11 +21,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
+
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: darkColorScheme,
+
+        ),
+        home: WillPopScope(
+          onWillPop: () async {
+            //print('');
+            return false;
+          },
+          child: Scaffold(
 
 
-          body: Home(),
-    ));
+
+            body: Home(),
+    ),
+        ));
   }
 
 }

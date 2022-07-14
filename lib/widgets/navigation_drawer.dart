@@ -18,14 +18,14 @@ class NavigationDrawerWidget extends StatelessWidget {
               height: 115,
               child: DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                //  color: Colors.blue,
 
                 ),
                 child: Text(
                   'Menu',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
+                  //  color: Colors.white,
+                    fontSize: 16,
                   ),
                 ),
               ),
