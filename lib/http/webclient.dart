@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:cartola_ios/models/atleta.dart';
+import 'package:cartola_ios/models/atleta_resumido.dart';
+import 'package:cartola_ios/models/maisEscalados.dart';
 import 'package:cartola_ios/models/scout.dart';
 import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
 import '../models/clube.dart';
 import '../models/partida.dart';
+import '../models/rodada.dart';
 
 class LoggingInterceptor implements InterceptorContract {
   @override
@@ -79,6 +82,108 @@ Future<List<Clube>> listarClubes() async {
     listaClubes.add(clubeNovo);
   }
   return listaClubes;
+}
+
+Future<Rodada> selecionaRodada() async {
+  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+  final Response response = await client.get(
+      Uri.parse('https://api.cartola.globo.com/partidas'));
+  final Map<String, dynamic> decodedJson = json.decode(response.body);
+  Rodada rodada = Rodada(
+      decodedJson['rodada']  );
+  return rodada;
+}
+
+Future<String> meuTime() async {
+  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+  final Response response = await client
+      .get(Uri.parse('https://api.cartola.globo.com/auth/time'),headers : {
+        "X-GLB-Token" : "1059ef5ba50cf0dc59f8221f6496e5a2a4e722d594669724a414f75785a427566373435556b317159444547695361545751626a5872473757732d786d646b4968475f742d37386c54774545684c6e4c7a43756279524c522d506d656d526446477676516575773d3d3a303a72616661656c2e6368696172656c69" }
+  );
+  final Map<String, dynamic> decodedJson = json.decode(response.body);
+  print(decodedJson);
+  return 'ok';
+//   headers: {
+//     "Content-Type": "application/json",
+//   "Cache-Control": "no-cache"
+// }
+}
+
+
+String numeroRodada(){
+  String str = '';
+
+  selecionaRodada().then((result){
+    str = result.numRodada.toString();
+  });
+  return str;
+}
+
+Future<double> pontuacaoNaRodada(int atletaId) async {
+  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+  final Response response;
+
+  response = await client.get(
+      Uri.parse('https://api.cartola.globo.com/mercado/status'));
+  var data =  json.decode(response.body);
+  var status = data['status_mercado'];
+  if (status == 2)
+  {
+    final Response responsePontuacao = await client.get(
+        Uri.parse('https://api.cartola.globo.com/atletas/pontuados'));
+    final Map<String, dynamic> decodedJson = json.decode(responsePontuacao.body);
+    Map info = decodedJson['atletas'];
+    var pontos = info['${atletaId}']['pontuacao'];
+    print(pontos);
+    if (pontos != null){
+
+      return pontos;
+
+    }
+    else{
+      return 0.0;
+    }
+
+  }
+  else
+  {
+  return 0.0;
+  }
+  return 0.0;
+
+}
+
+Future<List<MaisEscalados>> listarMaisEscalados() async {
+  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+  final Response response = await client.get(
+      Uri.parse('https://api.cartola.globo.com/mercado/destaques'));
+   var data =  json.decode(response.body);
+  final List<MaisEscalados> maisEscalados = [];
+  //print (data);
+  for (var v in data){
+    final MaisEscalados maisEscalado = MaisEscalados.name(
+      v['posicao'],
+      v['posicao_abreviacao'],
+      v['clube'],
+      v['escudo_clube'],
+      v['clube_id'],
+      v['escalacoes'],
+      AtletaResumido(
+        v['Atleta']['nome'],
+        v['Atleta']['apelido'],
+        v['Atleta']['apelido_abreviado'],
+        v['Atleta']['foto'],
+        v['Atleta']['atleta_id'],
+        v['Atleta']['preco_editorial'],
+
+      ),
+      v['clube_nome'],
+      );
+maisEscalados.add(maisEscalado);
+
+
+  }
+  return maisEscalados;
 }
 
 Future<List<Atleta>> listarAtletas(int clube_id) async {
@@ -157,3 +262,4 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
 
   return listaAtletas;
 }
+

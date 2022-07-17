@@ -1,3 +1,4 @@
+import 'package:cartola_ios/screens/maisescalados.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/home.dart';
@@ -38,9 +39,14 @@ class NavigationDrawerWidget extends StatelessWidget {
                   // Future.delayed(Duration.zero, () {
                   //   Navigator.pop(context);
                   // });
-
-
                 }
+            ),
+            ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text('Mais Escalados'),
+              onTap: () {
+                _showMaisEscalados(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
@@ -67,6 +73,12 @@ class NavigationDrawerWidget extends StatelessWidget {
   void _showTimes(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => Times(),
+    ));
+  }
+
+  void _showMaisEscalados(BuildContext context){
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Destaques(),
     ));
   }
 }

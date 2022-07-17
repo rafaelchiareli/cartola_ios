@@ -13,7 +13,10 @@ import 'theme/color_scheme.dart';
 void main() {
   runApp(MyApp());
   //listarAtletas(262).then((listaAtletas) => print('Clubes ${listaAtletas}'));
-  listarPartidas().then((listPartidas) => print('Partidas : ${listPartidas}'));
+  //listarPartidas().then((listPartidas) => print('Partidas : ${listPartidas}'));
+  //listarMaisEscalados().then((mais) => print(mais));
+ // pontuacaoNaRodada(37281).then((info) => print(info));
+  meuTime();
 }
 
 class MyApp extends StatelessWidget {
