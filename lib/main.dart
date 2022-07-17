@@ -16,7 +16,7 @@ void main() {
   //listarPartidas().then((listPartidas) => print('Partidas : ${listPartidas}'));
   //listarMaisEscalados().then((mais) => print(mais));
  // pontuacaoNaRodada(37281).then((info) => print(info));
-  meuTime();
+ buscarMeuPerfil().then((perfil) => print(perfil));
 }
 
 class MyApp extends StatelessWidget {

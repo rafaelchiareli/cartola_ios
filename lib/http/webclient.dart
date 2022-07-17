@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:cartola_ios/models/atleta.dart';
 import 'package:cartola_ios/models/atleta_resumido.dart';
 import 'package:cartola_ios/models/maisEscalados.dart';
+import 'package:cartola_ios/models/meu_perfil.dart';
+import 'package:cartola_ios/models/meu_time.dart';
 import 'package:cartola_ios/models/scout.dart';
 import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
@@ -94,19 +96,140 @@ Future<Rodada> selecionaRodada() async {
   return rodada;
 }
 
-Future<String> meuTime() async {
+Future<Perfil> buscarMeuPerfil() async {
   Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
   final Response response = await client
       .get(Uri.parse('https://api.cartola.globo.com/auth/time'),headers : {
         "X-GLB-Token" : "1059ef5ba50cf0dc59f8221f6496e5a2a4e722d594669724a414f75785a427566373435556b317159444547695361545751626a5872473757732d786d646b4968475f742d37386c54774545684c6e4c7a43756279524c522d506d656d526446477676516575773d3d3a303a72616661656c2e6368696172656c69" }
   );
   final Map<String, dynamic> decodedJson = json.decode(response.body);
-  print(decodedJson);
-  return 'ok';
-//   headers: {
-//     "Content-Type": "application/json",
-//   "Cache-Control": "no-cache"
-// }
+
+  Map dadosTime = decodedJson['time'];
+  Map dadosTitulares = decodedJson['atletas'];
+  Map dadosReservas = decodedJson['reservas'];
+  List<Atleta> listaTitulares = [];
+  List<Atleta> listaReservas = [];
+for (var t in dadosTitulares.values){
+  final Scout scout = Scout(
+  t['scout']['CA'],
+  t['scout']['DS'],
+  t['scout']['FC'],
+  t['scout']['FF'],
+  t['scout']['FS'],
+  t['scout']['PI'],
+  t['scout']['SG'],
+  t['scout']['A'],
+  t['scout']['FD'],
+  t['scout']['FT'],
+  t['scout']['G'],
+  t['scout']['I'],
+  t['scout']['PS'],
+  t['scout']['DE'],
+  t['scout']['GS'],
+  t['scout']['PC'],
+  t['scout']['VC'],
+  t['scout']['GC'],
+  t['scout']['PP'],
+  t['scout']['DP'],
+  );
+  Atleta titular = Atleta(
+      scout,
+      t['atleta_id'],
+      t['rodada_id'],
+      t['clube_id'],
+      t['posicao_id'],
+      t['status_id'],
+      double.parse(t['pontos_num'].toString()),
+      double.parse(t['preco_num'].toString()),
+      double.parse(t['variacao_num'].toString()),
+      double.parse(t['media_num'].toString()),
+      t['jogos_num'],
+      double.parse(t['minimo_para_valorizar'].toString()),
+      t['slug'],
+      t['apelido'],
+      t['apelido_abreviado'],
+      t['nome'],
+      t['foto'] == null ? "" : t['foto'],
+      Icon(Icons.person_off)
+  );
+  listaTitulares.add(titular);
+}
+
+  for (var r in dadosReservas.values){
+    final Scout scout = Scout(
+      r['scout']['CA'],
+      r['scout']['DS'],
+      r['scout']['FC'],
+      r['scout']['FF'],
+      r['scout']['FS'],
+      r['scout']['PI'],
+      r['scout']['SG'],
+      r['scout']['A'],
+      r['scout']['FD'],
+      r['scout']['FT'],
+      r['scout']['G'],
+      r['scout']['I'],
+      r['scout']['PS'],
+      r['scout']['DE'],
+      r['scout']['GS'],
+      r['scout']['PC'],
+      r['scout']['VC'],
+      r['scout']['GC'],
+      r['scout']['PP'],
+      r['scout']['DP'],
+    );
+    Atleta reserva = Atleta(
+        scout,
+        r['atleta_id'],
+        r['rodada_id'],
+        r['clube_id'],
+        r['posicao_id'],
+        r['status_id'],
+        double.parse(r['pontos_num'].toString()),
+        double.parse(r['preco_num'].toString()),
+        double.parse(r['variacao_num'].toString()),
+        double.parse(r['media_num'].toString()),
+        r['jogos_num'],
+        double.parse(r['minimo_para_valorizar'].toString()),
+        r['slug'],
+        r['apelido'],
+        r['apelido_abreviado'],
+        r['nome'],
+        r['foto'] == null ? "" : r['foto'],
+        Icon(Icons.person_off)
+    );
+    listaTitulares.add(reserva);
+  }
+
+  final MeuTime time = MeuTime(
+    dadosTime['nome'],
+    dadosTime['slug'],
+    dadosTime['url_escudo_png'],
+    dadosTime['url_camisa_png'],
+    dadosTime['foto_perfil'],
+    dadosTime['time_id'],
+    dadosTime['clube_id'],
+  );
+
+
+
+  final Perfil meuTime = Perfil(
+    listaTitulares,
+    listaReservas,
+    time,
+    decodedJson['pontos_campeonato'],
+    decodedJson['pontos'],
+    decodedJson['esquema_id'],
+    decodedJson['rodada_atual'],
+
+    decodedJson['patrimonio'],
+    decodedJson['valor_time'],
+    decodedJson['total_ligas'],
+    decodedJson['variacao_patrimonio'],
+    decodedJson['variacao_pontos']
+  );
+
+return meuTime;
 }
 
 
@@ -194,7 +317,6 @@ Future<List<Atleta>> listarAtletas(int clube_id) async {
   final List<Atleta> listaAtletas = [];
 
   for (Map<String, dynamic> data in decodedJson["atletas"]) {
-    print(data['scout']['CA']);
     Icon icone = Icon(Icons.add);
 
     switch (data['status_id']) {
