@@ -105,11 +105,9 @@ Future<Perfil> buscarMeuPerfil() async {
   final Map<String, dynamic> decodedJson = json.decode(response.body);
 
   Map dadosTime = decodedJson['time'];
-  Map dadosTitulares = decodedJson['atletas'];
-  Map dadosReservas = decodedJson['reservas'];
   List<Atleta> listaTitulares = [];
   List<Atleta> listaReservas = [];
-for (var t in dadosTitulares.values){
+  for (Map<String, dynamic> t in decodedJson["atletas"]) {
   final Scout scout = Scout(
   t['scout']['CA'],
   t['scout']['DS'],
@@ -155,7 +153,7 @@ for (var t in dadosTitulares.values){
   listaTitulares.add(titular);
 }
 
-  for (var r in dadosReservas.values){
+  for (Map<String, dynamic> r in decodedJson["reservas"]) {
     final Scout scout = Scout(
       r['scout']['CA'],
       r['scout']['DS'],

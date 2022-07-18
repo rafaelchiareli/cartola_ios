@@ -3,6 +3,7 @@ import 'package:cartola_ios/widgets/navigation_drawer.dart';
 import 'package:cartola_ios/widgets/progress.dart';
 import 'package:flutter/material.dart';
 
+import '../models/atleta.dart';
 import '../models/meu_perfil.dart';
 
 class Perfl extends StatelessWidget {
@@ -38,9 +39,42 @@ class Perfl extends StatelessWidget {
                     radius:
                     25, // no matter how big it is, it won't overflow
                   ),
-                  title: Text(meuPeril.time.nome),
+                  title: Text(meuPeril.time.nome, style: TextStyle(
+                    fontSize: 14,
+                  ),),
                 ),
+                body: Row(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: meuPeril.atletas.length,
+                          itemBuilder: (context, index){
+                            final Atleta atleta =  meuPeril.atletas[index];
+                            return Card(
+                              child: Flexible(
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(atleta.foto != ""
+                                        ? atleta.foto.replaceAll('FORMATO', '140x140')
+                                        : 'https://png.pngtree.com/png-clipart/20190604/original/pngtree-404-error-page-png-image_1362453.jpg'),
+                                    backgroundColor: Colors.transparent,
+                                    radius:
+                                    25, // no matter how big it is, it won't overflow
+                                  ),
+                                  title: Text(atleta.nome),
+                                ),
+                              ),
+                            );
+
+                          }
+                      ),
+                    )
+                  ],
+                )
               );
+
             }
             else{
               return Text('Sem dados');
